@@ -1,0 +1,39 @@
+.FieldPicker {
+  /* force container to expand to size of content */
+  min-width: 220px;
+}
+
+.FieldRangePickerLabel {
+  margin-bottom: 5px;
+  padding-left: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+.FieldPicker .ant-calendar-picker {
+  margin-bottom: 7px;
+}
+.FieldPicker .ant-calendar-picker.overdue {
+  margin-left: 0;
+}
+.FieldPicker .FieldRangePickerInput {
+  width: 220px;
+}
+.FieldPicker input {
+  /* width: 220px; */
+  padding: 7px;
+  border: 1px solid #4a4a4a;
+  border-radius: 3px;
+  font-size: 14px;
+}
+.FieldPicker input:disabled {
+  background-color: #eaeaea;
+  cursor: not-allowed;
+}
+.FieldPicker .ant-calendar-picker.error input {
+  border: 1px solid #eb5454;
+}
+.FieldPicker .TextFieldError:after {
+  /* Move the pointer over to the middle of the input field */
+  left: 110px;
+}

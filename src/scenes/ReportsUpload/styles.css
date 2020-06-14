@@ -1,0 +1,25 @@
+.Dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  height: 200px;
+  width: 100%;
+
+  border: 2px dashed #4a4a4a;
+}
+
+.Dropzone.active {
+  border: 2px dashed #00d097;
+}
+
+.Dropzone.rejected {
+  border: 2px dashed #eb5454;
+  color: #eb5454;
+}
+
+.ReportsUploadItem {
+  display: flex;
+  justify-content: space-between;
+}

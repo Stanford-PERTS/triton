@@ -1,0 +1,9 @@
+.BooleanField {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 5px;
+
+  font-size: 14px;
+  font-weight: 600;
+}

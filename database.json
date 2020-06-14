@@ -1,0 +1,12 @@
+{
+  "defaultEnv": { "ENV": "NODE_ENV" },
+  "local": {
+    "driver": "mysql",
+    "host": "localhost",
+    "database": "triton",
+    "user": "triton",
+    "password": "triton",
+    "sql-file": true,
+    "multipleStatements": true
+  }
+}

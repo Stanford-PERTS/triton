@@ -1,0 +1,24 @@
+<div>
+  <p>
+    Hi {{first_name}},
+  </p>
+  <p>
+    There&rsquo;s been a change in {{program_name}}: you are no longer the
+    {{contact_term}} for the following {{classroom_term}}(s):
+  </p>
+  <ul>
+    {#
+      Custom brackets here to signify that items are rendered without escaping.
+      Everything should have been properly escaped when items were rendered
+      individually.
+    #}
+    (( items ))
+  </ul>
+  <p>
+    ~ The PERTS team
+  </p>
+  <p>
+    P.S. You can always visit Copilot to
+    <a href="{{triton_domain}}/notifications">view all your notifications</a>.
+  </p>
+</div>

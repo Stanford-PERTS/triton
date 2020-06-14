@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,800');
+
+/*
+  Box-sizing fix
+  https://www.paulirish.com/2012/box-sizing-border-box-ftw/
+ */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}

@@ -1,0 +1,11 @@
+.Notifications .no-unread {
+  text-align: center;
+  padding: 20px;
+}
+
+.Notifications .SectionItem {
+  /* Slightly more padding than default for .SectionItem, */
+  /* better for paragraph text. */
+  padding-left: 20px;
+  padding-right: 20px;
+}

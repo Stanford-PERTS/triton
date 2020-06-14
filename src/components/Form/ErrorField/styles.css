@@ -1,0 +1,16 @@
+.FieldError {
+  /* Needed for :after style below */
+  position: relative;
+
+  width: 100%;
+  margin: 7px 0 7px 0;
+  padding: 5px;
+
+  border-radius: 3px;
+
+  background: #eb5454;
+  color: #fff;
+
+  text-align: center;
+  font-size: 13px;
+}

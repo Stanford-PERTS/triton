@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Run before every `git push`.
+printf "Triton pre-push hook running...\n"
+
+# This ensures that lines which have an error cause this whole script to
+# exit with an error.
+# http://stackoverflow.com/questions/3474526/stop-on-first-error
+set -e
+
+if [ "$SKIP_TEST" != "true" ]
+then
+  # Cypress requires the development server to be active for end-to-end tests.
+  printf "Running Cypress against SDK with production build.\n"
+
+  mkdir -p .gae_sdk
+
+  CI=true npm run build
+
+  TRITON_SDK_PORT="10080"
+  TRITON_SDK_ADMIN_PORT="10008"
+  SDK_PID=0
+
+  if [[ $(lsof -i :${TRITON_SDK_PORT}) ]]
+  then
+      printf "Server already running on port ${TRITON_SDK_PORT}."
+  else
+      printf "Starting server on port ${TRITON_SDK_PORT}."
+      dev_appserver.py . -A=triton-dev --port=${TRITON_SDK_PORT} \
+        --admin_port=${TRITON_SDK_ADMIN_PORT} \
+        --storage_path=.gae_sdk --enable_console=true \
+        --enable_host_checking=false --support_datastore_emulator=true \
+        --skip_sdk_update_check=true > .gae_sdk/sdk_logs 2>&1 &
+      SDK_PID=$!
+  fi
+
+  npm run test:pre-push
+
+  if [[ "$SDK_PID" -ne 0 ]]
+  then
+    kill ${SDK_PID}
+  fi
+fi
+
+exit 0

@@ -1,0 +1,183 @@
+<!Doctype html>
+<html>
+  <head>
+    <title>Triton</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+      fieldset {
+        margin: 20px 0;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+
+$(function () {
+
+  'use strict';
+
+  var neptuneProtocol = '{{ neptune_protocol }}';
+  var neptuneDomain = '{{ neptune_domain }}';
+  var urlPrefix = neptuneProtocol + '://' + neptuneDomain;
+
+  var loggedInUser;
+  var jwtHeader;
+  var logoutTimer;
+
+  // Non-authenticated calls. Neither send nor receive authorization header.
+
+  $('#register-form').submit(function () {
+    var form = $(this);
+    $.post({
+      url: form.attr('action'),
+      data: form.serialize(),
+    }).done(function success(response, textStatus, jqXHR) {
+      console.log("email sent");
+    });
+    return false;
+  });
+
+  $('#reset-form').submit(function () {
+    var form = $(this);
+    $.post({
+      url: form.attr('action'),
+      data: form.serialize(),
+    }).done(function success(response, textStatus, jqXHR) {
+      console.log("email sent");
+    });
+    return false;
+  });
+
+  // Login: receives and stores an Authorization header.
+
+  $('#login-form').submit(function () {
+    var form = $(this);
+    $.post({
+      url: form.attr('action'),
+      data: form.serialize(),
+    }).done(function success(response, textStatus, jqXHR) {
+      login(jqXHR.getResponseHeader('Authorization'), response);
+    });
+    return false;
+  });
+
+  // Fully authenticated calls: sends, then receives and stores an Authoriation
+  // header, _even if_ the response isn't a 200.
+
+  $('#invite-form').submit(function () {
+    var form = $(this);
+    $.post({
+      url: form.attr('action'),
+      headers: { Authorization: jwtHeader },
+      data: form.serialize(),
+    }).done(function success(response, textStatus, jqXHR) {
+      console.log("email sent");
+    }).always(function (a, textStatus, b) {
+      var jqXHR = a.getResponseHeader ? a : b;
+      login(jqXHR.getResponseHeader('Authorization'));
+    });
+    return false;
+  });
+
+  function getUser() {
+    $.get({
+      url: urlPrefix + '/api/users/' + loggedInUser.uid,
+      headers: { Authorization: jwtHeader },
+    }).done(function success(response, textStatus, jqXHR) {
+      console.log(response);
+    }).always(function (a, textStatus, b) {
+      var jqXHR = a.getResponseHeader ? a : b;
+      login(jqXHR.getResponseHeader('Authorization'));
+    });
+  }
+
+  // End AJAX functions.
+
+  function login(authHeader, user) {
+    console.log("setting auth header:", authHeader);
+    if (user) {
+      // Only provided when hitting neptune/api/login. In other cases we're
+      // just renewing the JWT.
+      loggedInUser = user;
+    }
+    jwtHeader = authHeader;
+    $('#auth-status').html('logged in as ' + loggedInUser.email);
+    // JWT expires after 10 minutes, so make sure the users knows.
+    clearTimeout(logoutTimer);
+    logoutTimer = setTimeout(logout, 10 * 60 * 1000);
+  }
+
+  function logout() {
+    jwtHeader = loggedInUser = undefined;
+    $('#auth-status').html('logged out');
+  }
+
+  $('#get-button').click(getUser);
+  $('#logout-button').click(logout);
+});
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+
+      <fieldset>
+        <legend>Register</legend>
+        <form
+          id="register-form"
+          action="/api/register"
+          method="POST"
+        >
+          <input type="email" placeholder="Email" name="email">
+          <button type="submit">Submit</button>
+        </form>
+      </fieldset>
+
+      <fieldset>
+        <legend>Reset Password</legend>
+        <form
+          id="reset-form"
+          action="/api/reset_password"
+          method="POST"
+        >
+          <input type="email" placeholder="Email" name="email">
+          <button type="submit">Submit</button>
+        </form>
+      </fieldset>
+
+      <fieldset>
+        <legend>Log In</legend>
+        <form
+          id="login-form"
+          action="{{neptune_protocol}}://{{neptune_domain}}/api/login"
+          method="POST"
+        >
+          <p><input type="email" placeholder="Email" name="email"></p>
+          <p><input type="password" placeholder="Password" name="password"></p>
+          <input type="hidden" name="auth_type" value="email">
+          <p><button type="submit">Submit</button></p>
+        </form>
+      </fieldset>
+
+      <fieldset>
+        <legend>Invite</legend>
+        <form
+          id="invite-form"
+          action="/api/invitations"
+          method="POST"
+        >
+          <p>
+            <input type="email" placeholder="Email" name="to_address">
+            <input type="hidden" name="subject" value="Invitation to join Copilot">
+          </p>
+          <p><input type="text" placeholder="Team ID" name="team_id"></p>
+          <p><button type="submit">Submit</button></p>
+        </form>
+      </fieldset>
+
+      <p>You are <strong id="auth-status">not logged in</strong></p>
+      <p><button id="get-button">get logged in user</button></p>
+      <p><button id="logout-button">log out</button></p>
+
+    </div>
+  </body>
+</html>

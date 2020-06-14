@@ -1,0 +1,21 @@
+<div>
+  <p>
+    Hi {{first_name}},
+  </p>
+  <p>
+    You have new reports for {{program_name}}! To access your new reports, click
+    the links below or
+    <a href="{{triton_domain}}/notifications">sign into Copilot</a>.
+  </p>
+  <ul>
+    {#
+      Custom brackets here to signify that items are rendered without escaping.
+      Everything should have been properly escaped when items were rendered
+      individually.
+    #}
+    (( items ))
+  </ul>
+  <p>
+    ~ The PERTS team
+  </p>
+</div>

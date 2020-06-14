@@ -1,0 +1,90 @@
+/*
+  Site wide styles
+ */
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #ffffff;
+
+  color: #4a4a4a;
+}
+
+body,
+input,
+button {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/*
+  Site wide text styles
+*/
+.center {
+  text-align: center;
+}
+
+.plainlink {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 30px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #283044;
+}
+
+html a, html a:hover {
+  /* should match theme.palette.dark */
+  color: #015597;
+}
+
+code {
+  /* Don't break "variable names" or other devvy text on mid-word hyphens. */
+  white-space: nowrap;
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* Add to scenes that you'd like to have the space tile appear */
+.LaunchPage {
+  background: #3faeeb url(./assets/login_clouds.png) repeat-x bottom;
+  overflow-x: overlay;
+}
+
+/* Override some styles that come with antd. */
+html .ant-tooltip-inner {
+  word-break: break-word;
+}
+
+html .ant-input {
+  height: 37px;
+}
+
+/* TODO MOVE THESE STYLES TO A BETTER LOCATION */
+.ContentWrapper {
+  display: flex;
+  margin: 16px 20px;
+}
+
+.ContentMain {
+  width: 900px;
+  border: 1px solid #4a4a4a;
+  background-color: #ffffff;
+}
+
+.ContentOptions {
+  width: 320px;
+}

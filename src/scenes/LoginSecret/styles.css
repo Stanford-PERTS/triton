@@ -1,0 +1,39 @@
+.LoginPage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginForm {
+  margin: 20px 0;
+}
+
+.LoginFormContainer {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.SetPasswordSuccess {
+  margin-bottom: 10px;
+  padding: 7px;
+
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+
+  border: 1px solid #00d097;
+  border-radius: 3px;
+}
+
+.SecondaryGroup {
+  border-bottom-left-raduis: 5px;
+  border-bottom-right-raduis: 5px;
+  background-color: #eaeaea;
+  padding: 10px;
+}

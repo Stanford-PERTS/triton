@@ -1,0 +1,59 @@
+.SectionItem {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 44px;
+  padding: 14px 10px;
+}
+
+.SectionItem:not(:last-child) {
+  border-bottom: 1px solid #b7bbc0;
+}
+
+.SectionItem.disabled {
+  color: gray;
+  font-style: italic;
+}
+
+.SectionItem iframe {
+  /* Limit embedded YouTube videos to Task/SectionItem width */
+  max-width: 100%;
+}
+
+.SectionItemIcon {
+  flex-basis: 26px;
+}
+
+.SectionItemContent {
+  display: block;
+  flex: 1 1 auto;
+}
+
+.SectionItem.centered .SectionItemContent {
+  text-align: center;
+}
+
+.SectionItem.centered .SectionItemContent > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.SectionItemLink {
+  color: #4a4a4a;
+  text-decoration: none;
+}
+
+.SectionItemLink:hover:not(.disabled) {
+  background: #f8f8f8;
+}
+
+.SectionItemLink:active:not(.disabled) {
+  background: #e5f6fd;
+}
+
+.SectionContent .InfoBox {
+  margin: 0;
+  border-radius: 0;
+}

@@ -1,0 +1,9 @@
+body {
+  margin-top: 40px;
+}
+
+body,
+input,
+button {
+  font-family: 'Open Sans', sans-serif;
+}

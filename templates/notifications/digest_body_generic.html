@@ -1,0 +1,19 @@
+<div>
+  <p>
+    Hi {{first_name}} - Some things have happened on your Copilot account.
+    Click the links below or
+    <a href="{{triton_domain}}/notifications">sign into
+    Copilot</a>.
+  </p>
+  <ul>
+    {#
+      Custom brackets here to signify that items are rendered without escaping.
+      Everything should have been properly escaped when items were rendered
+      individually.
+    #}
+    (( items ))
+  </ul>
+  <p>
+    ~ Your friends at PERTS
+  </p>
+</div>

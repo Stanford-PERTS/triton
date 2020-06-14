@@ -1,0 +1,21 @@
+.CardSelect {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  height: 60px;
+  width: 60px;
+  background: #4a4a4a;
+
+  transform: rotate(45deg);
+
+  cursor: pointer;
+}
+
+.CardSelect i {
+  position: relative;
+  top: 36px;
+  left: 20px;
+  color: #ffffff;
+
+  transform: rotate(-45deg);
+}

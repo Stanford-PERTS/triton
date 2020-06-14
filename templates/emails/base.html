@@ -1,0 +1,49 @@
+<style>
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  width: 100%;
+  background: #3faeeb url(https://copilot.perts.net/static/media/login_clouds.2e0e8a5a.png) repeat-x bottom;
+  padding: 50px;
+  font-family: "Open Sans", sans-serif;
+  line-height: 2em;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+td {
+  padding: 25px;
+  border-top: 4px solid #4a4a4a;
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 0px rgba(74, 74, 74, 0.5);
+}
+
+h2 {
+  font-size: 1.25em;
+}
+
+ul {
+  line-height: 1.5em;
+}
+
+</style>
+
+<table >
+  <tbody>
+    <tr>
+      <td>
+
+{% block body %}
+{% endblock %}
+
+      </td>
+    </tr>
+  </tbody>
+</table>

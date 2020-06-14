@@ -1,0 +1,18 @@
+.Loading {
+  padding: 14px 10px;
+}
+
+.Loading.inline {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  transform: none;
+}
+
+.Loading i {
+  margin-right: 5px;
+}

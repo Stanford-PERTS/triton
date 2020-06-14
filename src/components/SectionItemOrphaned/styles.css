@@ -1,0 +1,8 @@
+.SectionItemOrphaned {
+  border-bottom: 0;
+  padding: 0 10px;
+}
+
+.SectionItemOrphaned:not(:last-child) {
+  border-bottom: 0;
+}

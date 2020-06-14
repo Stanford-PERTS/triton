@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+
+    <!--
+      Notice the use of %PUBLIC_URL% in the tag above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+
+    <title>PERTS : Copilot</title>
+
+    <!--
+      Enable client logging via sentry.io. Load their javascript as early as
+      possible so we can log errors downstream.
+    -->
+    <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js"
+            crossorigin="anonymous">
+    </script>
+    <script>
+      // Namespace for global environment variables.
+      const PERTS = {};
+      window.PERTS = PERTS;
+
+      // Place variable injections below. To allow for server replace via
+      // jinja, we first try to assign using `{{ variable_name }}` syntax.
+      // Then, for local development, we check if the replacement happened, and
+      // if not, we set up our defaults.
+
+      // Jinja doesn't run on localhost because the front end (webpack dev
+      // server) is on :3000 and the back end (app engine sdk) is on :10080.
+
+      // Sentry.io account information.
+      PERTS.SENTRY_CONFIG_URL = '{{ sentry_config_url }}';
+      if (PERTS.SENTRY_CONFIG_URL.indexOf('sentry_config_url') === -1) {
+        Raven.config(PERTS.SENTRY_CONFIG_URL).install();
+        PERTS.isProduction = true;
+      } else {
+        PERTS.isProduction = false;
+      }
+
+
+      PERTS.NEPTUNE_PROTOCOL = '{{ neptune_protocol }}';
+      if (PERTS.NEPTUNE_PROTOCOL.indexOf('neptune_protocol') !== -1) {
+        PERTS.NEPTUNE_PROTOCOL = 'http';
+      }
+
+      PERTS.NEPTUNE_DOMAIN = '{{ neptune_domain }}';
+      if (PERTS.NEPTUNE_DOMAIN.indexOf('neptune_domain') !== -1) {
+        PERTS.NEPTUNE_DOMAIN = 'localhost:8080';
+      }
+
+      PERTS.TRITON_PROTOCOL = '{{ triton_protocol }}';
+      if (PERTS.TRITON_PROTOCOL.indexOf('triton_protocol') !== -1) {
+        PERTS.TRITON_PROTOCOL = 'http';
+      }
+
+      PERTS.TRITON_DOMAIN = '{{ triton_domain }}';
+      if (PERTS.TRITON_DOMAIN.indexOf('triton_domain') !== -1) {
+        PERTS.TRITON_DOMAIN = 'localhost:10080';
+      }
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35079862-4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Important to minimize collection of personal data or profiling.
+      // Laws like the GDPR relate to "monitoring of the behaviour" of users,
+      // and we prefer not to be subject to such laws in the first place.
+      // https://gdpr-info.eu/recitals/no-24/
+      // https://developers.google.com/analytics/devguides/collection/gtagjs/ip-anonymization
+      gtag('config', 'UA-35079862-4', { 'anonymize_ip': true });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start`.
+      To create a production bundle, use `npm run build`.
+    -->
+  </body>
+</html>

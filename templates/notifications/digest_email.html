@@ -1,0 +1,12 @@
+{% extends 'emails/base.html' %}
+
+{#
+  digests are already nicely rendered as html so we can use them in the
+  notifications screen; we just need to wrap them in some email styles
+#}
+
+{% block body %}
+
+{{ body | safe }}
+
+{% endblock %}

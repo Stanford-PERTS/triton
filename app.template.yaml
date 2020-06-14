@@ -1,0 +1,126 @@
+###############################################################################
+##                                                                           ##
+##                          !!  DO NOT EDIT !!                               ##
+##                                                                           ##
+##  instead, edit branch_environment.json, and then generate app.yaml by     ##
+##  running `python gae_server/branch_environment.py` at the command line.   ##
+##                                                                           ##
+###############################################################################
+
+env_variables:
+  PROJECT_ID: "${PROJECT_ID}"
+  # Versions are separate run times with different code in the same app, in
+  # contact with the same datastore. One version at a time is set as the
+  # default, which is what you get when you don't specify a version in the URL.
+  # You can target a specific version with a URL like this:
+  # > acceptance.mindsetkit.appspot.com
+  # The names for the versions are taken from DTAP terminology:
+  # http://en.wikipedia.org/wiki/Development,_testing,_acceptance_and_production
+  APP_ENGINE_VERSION: "${APP_ENGINE_VERSION}"
+  DEVELOPMENT_PROJECT_ID: 'triton-dev'
+  CURRENTLY_TESTING: 'false'
+  HOSTING_DOMAIN: ${HOSTING_DOMAIN}
+  NEPTUNE_DOMAIN: ${NEPTUNE_DOMAIN}
+  YELLOWSTONE_DOMAIN: ${YELLOWSTONE_DOMAIN}
+  RSERVE_DOMAIN: ${RSERVE_DOMAIN}
+  DEPLOYED_BROWSER_API_KEY: ${DEPLOYED_BROWSER_API_KEY}
+  LOCALHOST_BROWSER_API_KEY: ${LOCALHOST_BROWSER_API_KEY}
+  LOCAL_SQL_DB_NAME: ${LOCAL_SQL_DB_NAME}
+  LOCAL_SQL_TEST_DB_NAME: 'triton_test'
+  LOCAL_SQL_USER: 'triton'
+  LOCAL_SQL_PASSWORD: 'triton'
+  CLOUD_SQL_INSTANCE_ID: ${CLOUD_SQL_INSTANCE_ID}
+  CLOUD_SQL_DB_NAME: ${CLOUD_SQL_DB_NAME}
+  GCS_UPLOAD_PREFIX: ${GCS_UPLOAD_PREFIX}  # Must begin with a slash or be ''
+  NAMESPACE: ${NAMESPACE}
+  SENTRY_CONFIG_URL: ${SENTRY_CONFIG_URL}
+
+###############################################################################
+##                                                                           ##
+##                    !!  EDIT ONLY IN TEMPLATE  !!                          ##
+##                                                                           ##
+##  Only edit the following if this is the app.yaml.template file; then      ##
+##  generate app.yaml by running `python branch_environment.py` at the       ##
+##  command line.                                                            ##
+##                                                                           ##
+###############################################################################
+
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /static
+  static_dir: build/static
+  secure: always
+  http_headers:
+    Access-Control-Allow-Origin: '*'
+
+# # @todo(chris): set up load testing
+# - url: /loaderio-abcxyz/?
+#   static_files: static/loaderio-abcxyz.txt
+#   upload: static/loaderio-abcxyz\.txt
+
+- url: /robots\.txt
+  static_files: static/robots.txt
+  upload: robots\.txt
+
+# Basic browserconfig.xml file for crawlers
+- url: /browserconfig\.xml
+  static_files: static/browserconfig.xml
+  upload: browserconfig\.xml
+
+- url: /favicon\.ico
+  static_files: build/favicon.ico
+  upload: build/favicon\.ico
+  secure: always
+
+# create react app file
+- url: /asset-manifest\.json
+  static_files: build/favicon.ico
+  upload: build/asset-manifest\.json
+  secure: always
+
+# create react app file
+- url: /service-worker\.js
+  static_files: build/service-worker.js
+  upload: build/service-worker\.js
+  secure: always
+
+- url: /(cron|task).*
+  script: wsgi.application
+  # Make sure that the big bad internet can't hit our cron or task URLs.
+  # https://developers.google.com/appengine/docs/python/config/cron#Python_app_yaml_Securing_URLs_for_cron
+  login: admin
+  secure: always
+
+- url: /.*
+  script: wsgi.application
+  secure: always
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+- name: jinja2
+  version: "2.6"
+- name: MySQLdb
+  version: "1.2.5"
+- name: pycrypto
+  version: "2.6"
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^.*bower\_components$
+- ^.*node\_modules$
+# SDK files
+- datastore.db
+- sdk_logs
+- logs.db
+- logs.db-journal
+- search_indexes
+- xsrf

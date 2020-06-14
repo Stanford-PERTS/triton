@@ -1,0 +1,90 @@
+.TextAreaLabel {
+  margin-bottom: 5px;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.TextAreaInput textarea {
+  width: 100%;
+
+  margin-bottom: 7px;
+  padding: 7px;
+
+  border: 1px solid #4a4a4a;
+  border-radius: 3px;
+
+  font-size: 14px;
+}
+
+.TextAreaInput textarea:disabled {
+  background-color: #eaeaea;
+  cursor: not-allowed;
+}
+
+.TextAreaInput textarea.error {
+  border: 1px solid #eb5454;
+}
+
+.TextAreaError {
+  /* Needed for :after style below */
+  position: relative;
+
+  width: 100%;
+  margin: 0 0 7px 0;
+  padding: 5px;
+
+  border-radius: 3px;
+
+  background: #eb5454;
+  color: #fff;
+
+  text-align: center;
+  font-size: 13px;
+}
+
+.TextAreaError:after {
+  /* Error message pointer to textarea field above */
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  border-bottom: 6px solid #eb5454;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+}
+
+/* CSSTransitionGroup Animations */
+.TextAreaError-enter {
+  max-height: 0px;
+}
+
+.TextAreaError-enter.TextAreaError-enter-active {
+  max-height: 30px;
+  transition-property: all;
+  transition-duration: 700ms;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.TextAreaError-leave {
+  max-height: 30px;
+  overflow-y: hidden;
+}
+
+.TextAreaError-leave.TextAreaError-leave-active {
+  max-height: 0;
+  opacity: 0.01;
+  transition-property: all;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.17, 0.71, 0.72, 0.98);
+}
+
+/* Hide number spinner buttons, which are too small to use anyway. */
+.TextArea.number .TextAreaInput textarea::-webkit-outer-spin-button,
+.TextArea.number .TextAreaInput textarea::-webkit-inner-spin-button {
+  display: none;
+}
+.TextArea.number .TextAreaInput textarea[type='number'] {
+  -moz-appearance: textfield;
+}

@@ -1,0 +1,13 @@
+.tab-wrapper a {
+  text-decoration: none;
+}
+
+.tab-wrapper .tab {
+  border: 1px solid gray;
+  padding: 10px;
+}
+
+.tab-wrapper .tab.active {
+  background-color: gray;
+  color: white;
+}

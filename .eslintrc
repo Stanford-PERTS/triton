@@ -1,0 +1,122 @@
+{
+  "extends": ["eslint:recommended", "react-app", "plugin:prettier/recommended", "prettier"],
+  "plugins": ["babel", "prettier"],
+  "env": {
+    "browser": true,
+    "jasmine": true
+  },
+  "globals": {
+    "angular": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-template-curly-in-string": "error",
+    "valid-jsdoc": "error",
+    "array-callback-return": "error",
+    "block-scoped-var": "error",
+    "complexity": ["error", 10],
+    "consistent-return": "error",
+    "curly": "error",
+    "default-case": "error",
+    "dot-notation": "error",
+    "eqeqeq": "error",
+    "no-caller": "error",
+    "no-else-return": "error",
+    "no-empty-function": "error",
+    "no-eval": "error",
+    "no-extra-bind": "error",
+    "no-implicit-coercion": "error",
+    "no-implicit-globals": "error",
+    "no-implied-eval": "error",
+    "babel/no-invalid-this": "error",
+    "no-labels": "error",
+    "no-lone-blocks": "error",
+    "no-loop-func": "error",
+    "no-multi-str": "error",
+    "no-new": "error",
+    "no-new-func": "error",
+    "no-new-wrappers": "error",
+    "no-octal-escape": "error",
+    "no-proto": "error",
+    "no-return-assign": "error",
+    "no-return-await": "error",
+    "no-script-url": "error",
+    "no-self-compare": "error",
+    "no-sequences": "error",
+    "no-throw-literal": "error",
+    "no-useless-concat": "error",
+    "no-useless-return": "error",
+    "no-void": "error",
+    "no-with": "error",
+    "prefer-promise-reject-errors": "warn",
+    "radix": "error",
+    "require-await": "error",
+    "no-catch-shadow": "error",
+    "no-shadow": "error",
+    "no-shadow-restricted-names": "error",
+    "no-use-before-define": "error",
+    "consistent-this": ["error", "that"],
+    "func-style": [
+      "error",
+      "declaration",
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    "linebreak-style": "error",
+    "lines-around-comment": "error",
+    "max-len": [
+      "error",
+      {
+        "code": 80,
+        "ignorePattern": "(^import|\\{' '\\}$)",
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "max-statements-per-line": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "multiline-comment-style": ["error", "separate-lines"],
+    "new-cap": "error",
+    "no-bitwise": "error",
+    "no-lonely-if": "error",
+    "no-negated-condition": "off",
+    "no-new-object": "error",
+    "no-plusplus": "error",
+    "no-tabs": "error",
+    "no-unneeded-ternary": "error",
+    "no-unused-vars": "error",
+    "operator-assignment": "error",
+    "sort-vars": "error",
+    "spaced-comment": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "no-dupe-keys": "error",
+    "no-duplicate-imports": "error",
+    "no-useless-computed-key": "error",
+    "no-useless-constructor": "error",
+    "no-useless-rename": "error",
+    "no-var": "error",
+    "object-shorthand": "error",
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": true
+      }
+    ],
+    "prefer-const": "error",
+    "prefer-destructuring": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "prefer-template": "error",
+    "react/no-unescaped-entities": [
+      "error",
+      { "forbid": ["‘", "’", "“", "”", "—", "–", "'", "\""] }
+    ]
+  }
+}

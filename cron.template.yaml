@@ -1,0 +1,133 @@
+###############################################################################
+##                                                                           ##
+##                    !!  EDIT ONLY IN TEMPLATE  !!                          ##
+##                                                                           ##
+##  Only edit the following if this is the cron.template.yaml file. Specific ##
+##  cron jobs can be enabled or disabled via the branch_environment.json     ##
+##  file. Then generate cron.yaml by running                                 ##
+##  `python gae_server/branch_environment.py` at the command line.           ##
+##                                                                           ##
+###############################################################################
+cron:
+
+- description: send any emails that are due according to the queue
+  url: /cron/send_pending_email
+  target: ${APP_ENGINE_VERSION}
+  schedule: every 1 minutes
+
+  # Error emails can contain sensitive data. Experimenting with not using them.
+# - description: check for errors and email us
+#   url: /cron/check_for_errors
+#   target: ${APP_ENGINE_VERSION}
+#   schedule: every 1 minutes
+
+- description: digest 24 hours of notifications per user and notification type
+  # Note that this will process notifications for the previous day, midnight to
+  # midnight, _in pacific time_, so in UTC that's from yesterday's 08:00 to
+  # today's 08:00. The time set below will be when messages (email, sms) are
+  # queued for delivery. They will actually be sent some short time later.
+  url: /cron/digest_notifications
+  target: ${APP_ENGINE_VERSION}
+  # 7am eastern, 4am pacific
+  schedule: every day 12:00
+
+- description: create notifications for surveys
+  url: /cron/cycle_emails
+  target: ${APP_ENGINE_VERSION}
+  # 2:30pm pacific, when teachers are working after classes
+  schedule: every thursday 21:30
+
+- description: cache team participation
+  url: /cron/team_participation
+  target: ${APP_ENGINE_VERSION}
+  # 6 am, 12pm, 6pm pacific
+  schedule: every 6 hours from 13:00 to 01:00
+
+# notifications for reports are generated one at time when reports are POSTed
+# and so there's no cron job for them.
+
+# # Backups
+#
+# The process Neptune uses for the datastore is to keep six buckets: 2 dailies,
+# 2 weeklies, and 2 monthlies, each of which alternate, so at any time you can
+# get a backup that is 1 to 2 days, weeks, or months old.
+#
+# However, Cloud SQL already keeps daily backups for us for two weeks. So to
+# have the same level of retention and redundancy, we only need to apply our
+# backup process to the last two months.
+
+- description: Clean out monthly 1
+  url: /cron/clean_gcs_bucket/triton-backup-monthly-1
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of jan,mar,may,jul,sep,nov 08:45
+- description: Monthly backup 1
+  url: /cron/sql_backup/production-01/triton/triton-backup-monthly-1
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of jan,mar,may,jul,sep,nov 09:00
+
+- description: Clean out monthly 2
+  url: /cron/clean_gcs_bucket/triton-backup-monthly-2
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of feb,apr,jun,aug,oct,dec 08:45
+- description: Monthly backup 2
+  url: /cron/sql_backup/production-01/triton/triton-backup-monthly-2
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of feb,apr,jun,aug,oct,dec 09:00
+
+  # Export slow query log to BigQuery and clear the table.
+- description: Export slow query log
+  url: /cron/export_slow_query_log
+  target: ${APP_ENGINE_VERSION}
+  # Midnight PST
+  schedule: every day 08:00
+
+  # Instruct RServe to process reports.
+  # 1. Turn it on. Wait 10 minutes to let it start up.
+  # 2. Run the reports. This can take some time.
+  # 3. Turn it off so we're not charged while it is inactive.
+- description: RServe status - turn ON
+  url: /cron/rserve/status/serving
+  target: ${APP_ENGINE_VERSION}
+  # Friday, 4 pm PST
+  schedule: every sat 00:00
+- description: EP reports
+  url: /cron/rserve/reports/ep
+  target: ${APP_ENGINE_VERSION}
+  # Friday, 4:10 pm PST
+  schedule: every sat 00:10
+  # N.B. Retries are only triggered by the _scheduled_ job, not when you click
+  # "run now". Consequently they do not work at all in the SDK. To debug
+  # retries, you have to set the schedule to something fast ("every 1 minutes")
+  # and deploy.
+  retry_parameters:
+    min_backoff_seconds: 60
+    job_retry_limit: 4
+- description: BELESET "Copilot Elevate" reports
+  url: /cron/rserve/reports/beleset
+  target: ${APP_ENGINE_VERSION}
+  # Friday, 4:30 pm PST
+  schedule: every sat 00:30
+  retry_parameters:
+    min_backoff_seconds: 60
+    job_retry_limit: 4
+- description: CSET reports
+  url: /cron/rserve/reports/cset
+  target: ${APP_ENGINE_VERSION}
+  # Friday, 4:40 pm PST
+  schedule: every sat 00:40
+  retry_parameters:
+    min_backoff_seconds: 60
+    job_retry_limit: 4
+- description: RServe status - turn OFF
+  url: /cron/rserve/status/stopped
+  target: ${APP_ENGINE_VERSION}
+  # Friday, 5 pm PST
+  schedule: every sat 01:00
+- description: Release preview reports
+  url: /cron/release_previews
+  target: ${APP_ENGINE_VERSION}
+  # Important that this is before the digest window closes at 08:00 UTC, so
+  # report notifications on Sunday evening become emails on Monday morning.
+  # See task_handlers.DigestUserNotifications.
+  # Sunday, 11 pm pacific
+  schedule: every mon 07:00

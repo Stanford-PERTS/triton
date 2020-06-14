@@ -1,0 +1,28 @@
+.FieldRangePickerInput input {
+  border: 0;
+  font-size: 14px;
+}
+.FieldRangePickerInput .ant-calendar-picker.error input {
+  border: 0;
+  color: #eb5454;
+}
+.FieldRangePickerInput .ant-calendar-picker.error .ant-calendar-picker-input {
+  border: 1px solid #eb5454;
+}
+.FieldRangePickerInput .TextFieldError:after {
+  /* Move the pointer over to the middle of the input field */
+  left: 146px;
+}
+
+/* override the background color rule from a single-input picker so we don't */
+/* have multiple overlapping layers */
+.FieldPicker .FieldRangePicker input:disabled {
+  background-color: inherit;
+}
+
+/* "readonly" inputs are higher contrast than merely disabled ones so */
+/* so they're reasier to read. */
+.FieldPicker .readonly .ant-input-disabled {
+  background-color: inherit;
+  color: rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,44 @@
+<div>
+  <p>
+    Hi {{first_name}} - It&rsquo;s time to survey your students for Copilot!
+  </p>
+  <ul>
+    <li>
+      Run the survey on Thursday or Friday, so your students&rsquo; answers
+      relate to this week.
+    </li>
+    <li>
+      Remind students that their answers are confidential and that their honest
+      answers will help you improve the class.
+    </li>
+    <li>
+      Ask students to go to <a href="https://www.perts.me">perts.me</a>
+      and enter the participation code for their class.
+    </li>
+    <li>
+      Your students will need to enter a unique identifier. By default, the
+      survey asks for &ldquo;school computer user name&rdquo;. If your students
+      don&rsquo;t have this, you will need to have them write a different
+      identifier for your reports to work.
+    </li>
+  </ul>
+  <p>
+    Your class(es) and participation codes:
+  </p>
+  <ul>
+    {# Custom brackets here to signify that items are rendered without escaping.
+    Everything should have been properly escaped when items were rendered
+    individually. #} (( items ))
+  </ul>
+  <p>
+    For additional advice about surveying your students, please see the
+    <a href="https://www.perts.net/engage/faq#survey-instructions">FAQ</a>.
+  </p>
+  <p>
+    ~ Your friends at PERTS
+  </p>
+  <p>
+    P.S. You can always visit Copilot to
+    <a href="{{triton_domain}}/notifications">view all your notifications</a>.
+  </p>
+</div>

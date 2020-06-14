@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <title>Completion Certificate | The Engagement Project</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ neptune_protocol }}://{{ neptune_domain }}/static/css/jurassic.css">
+  <link rel="stylesheet" href="{{ neptune_protocol }}://{{ neptune_domain }}/static/css/ep.css">
+</head>
+
+<body>
+
+  <div id="header">
+    <div id="angled-bar"></div>
+    <img src="https://www.perts.net/static/images/pertslogo.png" class="perts-logo">
+  </div>
+
+  <!-- gives a nice white background to the logo when over content -->
+  <div id="header-lower-layer"></div>
+  <div class="main-container">
+    <div style="text-align: center">
+      <h1 class="super title">
+        The Engagement Project
+      </h1>
+      <h1 class="title">
+        {{ team.name }}
+      </h1>
+    </div>
+
+    <h2>Completion Certificate</h2>
+
+    {% if complete %}
+
+    <p>This document certifies that <strong>{{ user_to_display.name }}</strong> has completed all of the requirements of the Engagement Project for the 2018-19 academic year.</p>
+    <p>The Engagement Project is an evidence-based program designed to support teachers who want to create a more engaging and more equitable classroom climate. It was developed by leading researchers at Stanford University, the University of Chicago, and University of California at Berkeley with significant input from dozens of educators across the United States.</p>
+
+    {% else %}
+
+    <p>
+      In order to get a completion certificate, you must complete the exit
+      survey (you can still do so now if you haven’t yet) and complete at least
+      three cycles of surveying. A cycle is considered complete if you surveyed
+      at least 80% of your rostered students.
+    </p>
+
+    {% endif %}
+
+    <h2>{{ user_to_display.name }}'s Progress</h2>
+
+    <table id="participation-table" class="display-table text-table">
+      <tbody>
+        {% for cycle in cycles_to_display %}
+        <tr>
+          <td>Cycle {{ cycle.ordinal }}</td>
+          <td>{{ cycle.pct }}% of students surveyed</td>
+          <td>
+            {% if cycle.pct >= 80 %}
+              <i class="fa fa-check good-stat"></i>
+            {% else %}
+              <i class="fa fa-remove bad-stat"></i>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td>Conclusion</td>
+          <td>Exit Survey</td>
+          <td>
+            {% if exit_survey_complete %}
+              <i class="fa fa-check good-stat"></i>
+            {% else %}
+              <i class="fa fa-remove bad-stat"></i>
+            {% endif %}
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</body>
+</html>

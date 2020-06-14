@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% set date_format = '%B %-d' %}
+
+<div hidden data-test="ep19-cycle-progress-email"></div>
+
+<p>Hi {{user.name}},</p>
+
+<p>
+  This is an Engagement Project progress update for
+  <strong><a href="{{copilot_url}}/teams/{{team.short_uid}}/steps">{{team.name}}</a></strong>.
+  Cycle {{cycle.ordinal}} is set to run from
+  {{cycle.start_date.strftime(date_format)}} to
+  {{cycle.end_date.strftime(date_format)}}.
+<p>
+
+<h2>Students Surveyed by Class</h2>
+
+<p>
+  To survey your students, refer to the
+  <a href="{{copilot_url}}/teams/{{team.short_uid}}/settings/survey-instructions">Survey
+  Instructions and participation codes</a>.
+</p>
+
+{% if classrooms | length %}
+<ul>
+  {% for c in classrooms %}
+    <li data-test="classrooms-list-{{c.uid}}">
+      {{ pct_complete_by_id[c.uid] }}% in
+      <a href="{{copilot_url}}/teams/{{team.short_uid}}/classrooms/{{c.short_uid}}">{{ c.name }}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p data-test="no-classrooms-message">
+  <em>You aren&rsquo;t the main contact for any classes.</em>
+</p>
+{% endif %}
+
+<h2>Practice Journal Entries</h2>
+
+
+{% if is_captain %}
+
+  <p>
+    Here’s the status of each team member’s Practice Journal entry:
+  </p>
+
+  <ul>
+    {% for info in journal_statuses %}
+      <li data-test="journal-status-{{info['user_id']}}">
+        {{ info['user_name'] }}: {{ info['status'] }}
+      </li>
+    {% endfor %}
+  </ul>
+
+
+{% else %}
+
+  {% if journal_complete %}
+    <p data-test="teacher-journal-complete">
+      Thanks for completing your Practice Journal entry! It will help you
+      track the effectiveness of different practices and share insights with
+      other teachers.
+    </p>
+  {% else %}
+    <p data-test="teacher-journal-incomplete">
+      Your practice journal has not been completed yet. Please submit it during
+      or after your cycle meeting. You can access your practice journal from
+      the
+      <a href="{{copilot_url}}/teams/{{team.short_uid}}/steps/cycle/{{cycle.uid}}">cycle
+      page</a>.
+    </p>
+  {% endif %}
+{% endif %}
+
+<h2>We’d love to hear from you!</h2>
+
+<p>
+  We hope this update was helpful. If you have any questions or requests,
+  please let us know by replying to this email.
+</p>
+
+<p>
+  Thanks!<br />
+  PERTS Copilot
+</p>
+
+{% endblock %}
